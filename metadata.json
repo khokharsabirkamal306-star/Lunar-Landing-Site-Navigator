@@ -1,0 +1,6 @@
+{
+  "name": "LUNA NAV",
+  "description": "3D Lunar South Pole Landing Site and Ephemeris Navigator",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

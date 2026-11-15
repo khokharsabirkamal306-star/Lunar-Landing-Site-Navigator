@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#081326">
+<title>LUNA NAV | Lunar Landing Site Navigator</title>
+<style>
+:root{--bg:#07101f;--panel:#101d32;--panel2:#14243c;--line:#263a59;--text:#edf4ff;--muted:#9fb0c9;--cyan:#64d8ed;--gold:#f4c66a;--green:#69d6a5;--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% -15%,#1a3557 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:1240px;margin:auto;padding:24px}
+header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px}.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(145deg,#a7efff,#317da9);display:grid;place-items:center;color:#061324;font-size:25px;box-shadow:0 8px 30px #40c5e544}.brand h1{font-size:20px;letter-spacing:2px;margin:0}.brand p{margin:1px 0 0;color:var(--muted);font-size:12px;letter-spacing:1.5px}.pill{border:1px solid #3b5b7c;border-radius:999px;padding:7px 12px;color:#bceefa;font-size:12px;background:#0e2037}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px;border-bottom:1px solid var(--line);padding-bottom:13px}.tab{background:transparent;border:1px solid transparent;color:var(--muted);padding:9px 14px;border-radius:10px}.tab.active,.tab:hover{background:#142944;border-color:#315171;color:var(--text)}
+.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:18px;margin-bottom:18px}.hero-main,.hero-side,.panel,.metric{background:linear-gradient(145deg,#14243a,#0e1a2d);border:1px solid var(--line);border-radius:18px}.hero-main{padding:28px;position:relative;overflow:hidden;min-height:240px}.eyebrow{color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase}.hero h2{font-size:clamp(28px,4vw,43px);line-height:1.08;margin:12px 0}.hero p{color:var(--muted);max-width:610px;margin:0 0 18px}.cta{background:var(--cyan);border:0;color:#061522;font-weight:800;padding:11px 16px;border-radius:10px}.moon-art{position:absolute;right:-35px;bottom:-105px;width:290px;height:290px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#f4f0d7,#a8b2b9 35%,#647489 68%,#26394e 72%);box-shadow:inset -28px -18px 40px #101b2c,0 0 65px #7dddf322;opacity:.82}.moon-art:before,.moon-art:after{content:"";position:absolute;border-radius:50%;background:#69788a55;box-shadow:inset 4px 4px 9px #33465b66}.moon-art:before{width:48px;height:48px;left:65px;top:70px}.moon-art:after{width:27px;height:27px;right:68px;top:130px}
+.hero-side{padding:20px;display:flex;flex-direction:column;justify-content:space-between}.hero-side h3{margin:0 0 6px}.hero-side p{font-size:13px;margin:0;color:var(--muted)}.status{display:flex;align-items:center;gap:8px;color:var(--green);font-size:12px;margin-top:16px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}.metric{padding:16px}.metric .label{color:var(--muted);font-size:12px}.metric .value{font-size:25px;font-weight:750;margin:5px 0 1px}.metric small{color:var(--muted);font-size:11px}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}.panel{padding:20px}.panel h3{margin:0 0 5px;font-size:17px}.sub{color:var(--muted);font-size:12px;margin:0 0 16px}.map{height:270px;border-radius:14px;overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 60%,#26364a,#0a1424 70%);border:1px solid #30445f}.map svg{width:100%;height:100%}.map-label{position:absolute;left:14px;top:12px;font-size:11px;color:#c6d7e9;background:#0a172acc;padding:5px 8px;border-radius:7px}.map-legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin-top:10px}.legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}.field select,.field input{width:100%;background:#091629;border:1px solid #314967;color:var(--text);border-radius:9px;padding:10px}.field.full{grid-column:1/-1}.action-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.secondary{background:#1a304b;color:var(--text);border:1px solid #365171;padding:10px 13px;border-radius:9px}.result-list{display:grid;gap:10px}.result{display:flex;justify-content:space-between;gap:10px;padding:12px;border-radius:11px;background:#0b192b;border:1px solid #253b57}.result strong{display:block}.result small{color:var(--muted)}.score{font-weight:800;color:var(--green)}.warning{color:var(--gold);font-size:12px;background:#392d173b;border:1px solid #6b532e;padding:12px;border-radius:10px;margin-top:14px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:12px;border-bottom:1px solid #263a55}th{color:var(--muted);font-weight:600}.good{color:var(--green)}.medium{color:var(--gold)}
+.section{display:none}.section.active{display:block}.foot{color:#8294ad;font-size:11px;text-align:center;margin:24px 0 4px}.tag{font-size:10px;color:#9de9f5;border:1px solid #3c7081;padding:3px 7px;border-radius:99px}
+@media(max-width:850px){.hero{grid-template-columns:1fr}.moon-art{opacity:.35}.grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.shell{padding:14px}.brand h1{font-size:17px}.pill{display:none}.hero-main{padding:22px}.metrics{gap:8px}.metric{padding:12px}.metric .value{font-size:21px}.controls{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:15px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="brand"><div class="logo">☾</div><div><h1>LUNA NAV</h1><p>LUNAR LANDING SITE NAVIGATOR</p></div></div>
+  <div class="pill">NASA SPACE APPS CHALLENGE 2026 · TEAM PROTOTYPE</div>
+</header>
+<nav aria-label="Main navigation">
+  <button class="tab active" data-tab="dashboard">Dashboard</button>
+  <button class="tab" data-tab="analyzer">Site Analyzer</button>
+  <button class="tab" data-tab="compare">Compare Sites</button>
+  <button class="tab" data-tab="about">About Project</button>
+</nav>
+
+<section id="dashboard" class="section active">
+  <div class="hero">
+    <div class="hero-main"><div class="eyebrow">Explore smarter · Plan safer</div><h2>Find the right place<br>to land on the Moon.</h2><p>An interactive concept dashboard for exploring lunar landing candidates, sunlight opportunities and Earth-visibility planning.</p><button class="cta" onclick="showTab('analyzer')">Open Site Analyzer&nbsp; ↗</button><div class="moon-art"></div></div>
+    <div class="hero-side"><div><span class="tag">MISSION FOCUS</span><h3>Moon South Pole</h3><p>Compare candidate regions for illumination, terrain context and communication planning.</p></div><div class="status"><span class="dot"></span> Prototype ready · Sample scenario loaded</div></div>
+  </div>
+  <div class="metrics">
+    <div class="metric"><div class="label">CANDIDATE SITES</div><div class="value" id="siteCount">4</div><small>Illustrative locations</small></div>
+    <div class="metric"><div class="label">SELECTED REGION</div><div class="value" style="font-size:19px" id="dashSite">Shackleton Rim</div><small>South Pole region</small></div>
+    <div class="metric"><div class="label">PLANNING MODE</div><div class="value" style="font-size:19px">Scenario</div><small>Not live ephemeris</small></div>
+    <div class="metric"><div class="label">DATA STATUS</div><div class="value" style="font-size:19px;color:var(--gold)">Demo</div><small>Replace with validated NASA data</small></div>
+  </div>
+  <div class="grid">
+    <div class="panel"><h3>Lunar South Pole Explorer</h3><p class="sub">Concept map · candidate markers are illustrative, not surveyed landing coordinates.</p>
+      <div class="map"><span class="map-label">MOON · SOUTH POLAR REGION (SCHEMATIC)</span>
+        <svg viewBox="0 0 600 300" role="img" aria-label="Schematic lunar polar map with candidate landing sites">
+          <defs><radialGradient id="surface"><stop stop-color="#b7c0c7"/><stop offset=".65" stop-color="#697a8d"/><stop offset="1" stop-color="#26394d"/></radialGradient></defs>
+          <circle cx="300" cy="185" r="190" fill="url(#surface)" opacity=".9"/>
+          <g fill="#3d5064" opacity=".55"><ellipse cx="205" cy="140" rx="42" ry="24"/><ellipse cx="350" cy="95" rx="28" ry="19"/><ellipse cx="420" cy="200" rx="52" ry="32"/><ellipse cx="265" cy="260" rx="34" ry="20"/><ellipse cx="120" cy="220" rx="20" ry="14"/></g>
+          <g fill="none" stroke="#dbe4e8" stroke-opacity=".35"><circle cx="300" cy="185" r="110"/><circle cx="300" cy="185" r="150"/><path d="M110 185H490M300 0V300"/></g>
+          <g id="markers"><circle cx="265" cy="105" r="7" fill="#64d8ed" stroke="#061326" stroke-width="3"/><circle cx="355" cy="155" r="7" fill="#f4c66a" stroke="#061326" stroke-width="3"/><circle cx="215" cy="205" r="7" fill="#69d6a5" stroke="#061326" stroke-width="3"/><circle cx="405" cy="235" r="7" fill="#ff8585" stroke="#061326" stroke-width="3"/></g>
+          <text x="300" y="24" text-anchor="middle" fill="#eaf4ff" font-size="11">N</text><text x="300" y="290" text-anchor="middle" fill="#eaf4ff" font-size="11">SOUTH POLAR VIEW</text>
+        </svg>
+      </div><div class="map-legend"><span><i class="legend-dot" style="background:#64d8ed"></i>Shackleton Rim</span><span><i class="legend-dot" style="background:#f4c66a"></i>Malapert Massif</span><span><i class="legend-dot" style="background:#69d6a5"></i>De Gerlache Rim</span><span><i class="legend-dot" style="background:#ff8585"></i>Haworth Rim</span></div>
+    </div>
+    <div class="panel"><h3>Candidate site snapshot</h3><p class="sub">Illustrative planning factors — not mission-certified measurements.</p><div class="result-list" id="snapshot"></div><div class="warning">This prototype uses demonstration values. It does not calculate real-time Sun/Earth geometry or certify a landing site.</div></div>
+  </div>
+</section>
+
+<section id="analyzer" class="section">
+  <div class="grid">
+    <div class="panel"><h3>Landing Site Analyzer</h3><p class="sub">Choose a candidate and planning date to view the demo assessment.</p>
+      <div class="controls">
+        <div class="field full"><label for="siteSelect">Candidate region</label><select id="siteSelect"></select></div>
+        <div class="field"><label for="dateSelect">Planning date</label><input type="date" id="dateSelect" value="2026-11-14"></div>
+        <div class="field"><label for="mission">Mission priority</label><select id="mission"><option value="balanced">Balanced mission</option><option value="power">Solar power opportunity</option><option value="comms">Earth communication</option><option value="terrain">Terrain caution</option></select></div>
+      </div>
+      <div class="action-row"><button class="cta" id="analyzeBtn">Analyze scenario</button><button class="secondary" id="resetBtn">Reset</button></div>
+      <div class="warning">Date selection currently labels a planning scenario only. A true date-dependent result requires an ephemeris calculation using validated lunar coordinates, orientation and terrain horizon data.</div>
+    </div>
+    <div class="panel"><h3>Scenario assessment</h3><p class="sub" id="assessmentTitle">Shackleton Rim · Demo assessment</p><div class="result-list" id="assessment"></div></div>
+  </div>
+</section>
+
+<section id="compare" class="section">
+  <div class="panel"><h3>Compare candidate regions</h3><p class="sub">Demonstration scorecard for explaining the decision process. Scores are not measured NASA data.</p>
+    <div class="table-wrap"><table><thead><tr><th>Candidate region</th><th>Illumination potential</th><th>Earth visibility context</th><th>Terrain caution</th><th>Demo index</th></tr></thead><tbody id="compareRows"></tbody></table></div>
+    <div class="warning">Do not use these scores for an actual landing decision. Replace them with traceable data and documented calculations before scientific use.</div>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="grid">
+    <div class="panel"><h3>Project mission</h3><p class="sub">LUNA NAV is a student-built decision-support concept for lunar mission planning.</p>
+      <p>It aims to help users compare candidate lunar regions by bringing several planning questions into one clear interface:</p>
+      <ul><li>When could a site receive useful sunlight?</li><li>When could Earth be above the local horizon?</li><li>How might terrain and local horizon features affect visibility?</li><li>How can mission planners compare sites transparently?</li></ul>
+      <p class="sub">Core idea: combine lunar terrain data with Sun/Earth ephemerides and explain the assumptions behind every result.</p>
+    </div>
+    <div class="panel"><h3>Recommended scientific data pipeline</h3><div class="result-list">
+      <div class="result"><div><strong>JPL Horizons</strong><small>Celestial ephemerides for Sun/Earth geometry</small></div><span class="tag">EPHEMERIS</span></div>
+      <div class="result"><div><strong>NASA LRO / LOLA</strong><small>Lunar elevation and terrain context</small></div><span class="tag">TERRAIN</span></div>
+      <div class="result"><div><strong>LROC QuickMap</strong><small>Explore lunar imagery and candidate regions</small></div><span class="tag">IMAGERY</span></div>
+      <div class="result"><div><strong>Validation</strong><small>Coordinate frames, time systems, local horizon and uncertainty</small></div><span class="tag">QUALITY</span></div>
+    </div></div>
+  </div>
+  <div class="panel" style="margin-top:16px"><h3>Useful research links</h3><p><a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noopener">NASA/JPL Horizons ↗</a> &nbsp;·&nbsp; <a href="https://quickmap.lroc.asu.edu/" target="_blank" rel="noopener">LROC QuickMap ↗</a> &nbsp;·&nbsp; <a href="https://pgda.gsfc.nasa.gov/" target="_blank" rel="noopener">NASA Planetary Geodesy Data ↗</a> &nbsp;·&nbsp; <a href="https://science.nasa.gov/moon/" target="_blank" rel="noopener">NASA Moon Science ↗</a></p></div>
+</section>
+<div class="foot">LUNA NAV · Educational prototype · Not affiliated with or endorsed by NASA · All demo scores are illustrative</div>
+</div>
+<script>
+const sites=[
+ {name:"Shackleton Rim",lat:-89.9,lon:0,illum:78,earth:72,terrain:48,index:76,color:"#64d8ed",note:"Candidate region used here for a balanced example."},
+ {name:"Malapert Massif",lat:-85.9,lon:0,illum:68,earth:84,terrain:38,index:79,color:"#f4c66a",note:"Illustrative option emphasizing Earth-view planning."},
+ {name:"De Gerlache Rim",lat:-88.5,lon:0,illum:73,earth:65,terrain:55,index:68,color:"#69d6a5",note:"Illustrative comparison case with higher terrain caution."},
+ {name:"Haworth Rim",lat:-87.4,lon:0,illum:55,earth:58,terrain:66,index:57,color:"#ff8585",note:"Illustrative case for discussing shadow and terrain risks."}
+];
+const $=id=>document.getElementById(id);
+function showTab(id){document.querySelectorAll(".section").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===id));}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+function fillSelect(){ $("siteSelect").innerHTML=sites.map((s,i)=>`<option value="${i}">${s.name}</option>`).join("");}
+function renderSnapshot(){ $("snapshot").innerHTML=sites.map((s,i)=>`<div class="result"><div><strong>${s.name}</strong><small>Demo planning index · ${s.index}/100</small></div><span class="score">${i===1?"Top demo score":"Candidate"}</span></div>`).join("");}
+function renderCompare(){ $("compareRows").innerHTML=sites.map(s=>`<tr><td><strong>${s.name}</strong></td><td>${s.illum}% <span class="medium">demo</span></td><td>${s.earth}% <span class="medium">demo</span></td><td>${s.terrain}% <span class="medium">caution</span></td><td><strong>${s.index}/100</strong></td></tr>`).join("");}
+function analyze(){
+ const s=sites[+$("siteSelect").value], priority=$("mission").value, date=$("dateSelect").value;
+ let rows=[
+  ["Sunlight opportunity",s.illum+" / 100","Illustrative illumination planning score"],
+  ["Earth visibility context",s.earth+" / 100","Illustrative line-of-sight planning score"],
+  ["Terrain caution",s.terrain+" / 100",s.terrain>55?"Higher caution in this sample scenario":"Moderate caution in this sample scenario"],
+  ["Candidate planning index",s.index+" / 100","Demonstration index; not a probability of safe landing"]
+ ];
+ if(priority==="power") rows.sort((a,b)=> (b[0].includes("Sunlight")?1:0)-(a[0].includes("Sunlight")?1:0));
+ if(priority==="comms") rows.sort((a,b)=> (b[0].includes("Earth")?1:0)-(a[0].includes("Earth")?1:0));
+ if(priority==="terrain") rows.sort((a,b)=> (b[0].includes("Terrain")?1:0)-(a[0].includes("Terrain")?1:0));
+ $("assessmentTitle").textContent=s.name+" · "+date+" · Demo assessment";
+ $("assessment").innerHTML=rows.map(r=>`<div class="result"><div><strong>${r[0]}</strong><small>${r[2]}</small></div><span class="score">${r[1]}</span></div>`).join("")+`<div class="result"><div><strong>Scenario note</strong><small>${s.note}</small></div><span class="tag">DEMO</span></div>`;
+ $("dashSite").textContent=s.name;
+}
+$("analyzeBtn").addEventListener("click",analyze);
+$("siteSelect").addEventListener("change",analyze);
+$("mission").addEventListener("change",analyze);
+$("resetBtn").addEventListener("click",()=>{$("siteSelect").value="0";$("mission").value="balanced";$("dateSelect").value="2026-11-14";analyze();});
+fillSelect();renderSnapshot();renderCompare();analyze();
+</script>
+</body>
+</html>
